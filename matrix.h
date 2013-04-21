@@ -4,27 +4,44 @@
  *
  * */
 
-long long ** initIntegerMatrix(long sizeX, long sizeY);
+#ifndef matrix_lib
+#define matrix_lib
 
-double ** initFloatMatrix(long sizeX, long sizeY);
+typedef long long **  IntegerMatrix;
+typedef double **     FloatMatrix;
 
-void freeIntegerMatrix(long long ** M, long sizeX);
+/* init */
 
-void freeFloatMatrix(double ** M, long sizeX);
+IntegerMatrix initIntegerMatrix(long sizeX, long sizeY);
+
+FloatMatrix initFloatMatrix(long sizeX, long sizeY);
+
+void freeIntegerMatrix(IntegerMatrix M, long sizeX);
+
+void freeFloatMatrix(FloatMatrix M, long sizeX);
 
 
-long long ** zeroIntegerMatrix(long sizeX, long sizeY);
+IntegerMatrix zeroIntegerMatrix(long sizeX, long sizeY);
 
-double ** zeroFloatMatrix(long sizeX, long sizeY);
+FloatMatrix zeroFloatMatrix(long sizeX, long sizeY);
 
-long long **idIntegerMatrix(long sizeX, long sizeY);
+IntegerMatrixidIntegerMatrix(long sizeX, long sizeY);
 
-double ** idFloatMatrix(long sizeX, long sizeY);
+FloatMatrix idFloatMatrix(long sizeX, long sizeY);
 
-long long ** randomIntegerMatrix(long sizeX, long sizeY);
+IntegerMatrix randomIntegerMatrix(long sizeX, long sizeY);
 
-double ** randomFloatMatrix(long sizeX, long sizeY);
+FloatMatrix randomFloatMatrix(long sizeX, long sizeY);
 
-void showIntegerMatrix(long long **, long sizeX, long sizeY);
+/* output */
+void showIntegerMatrix(IntegerMatrix, long sizeX, long sizeY);
 
-void showFloatMatrix(double **, long sizeX, long sizeY);
+void showFloatMatrix(FloatMatrix, long sizeX, long sizeY);
+
+/* action */
+
+IntegerMatrix
+integerMulS(IntegerMatrix A, long sizeXA, long sizeYA, 
+            IntegerMatrix B, long sizeXB, long sizeYB);
+
+#endif

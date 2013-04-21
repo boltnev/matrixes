@@ -12,7 +12,7 @@ int test_truth(){
 }
 
 int test_initIntegerMatrixInit(){
-    long long ** matrixA = initIntegerMatrix(100, 100);
+    IntegerMatrix matrixA = initIntegerMatrix(100, 100);
 
     matrixA[0][0] = 5;
     matrixA[99][99] = 5;
@@ -24,7 +24,7 @@ int test_initIntegerMatrixInit(){
 }
 
 int test_initFloatMatrixInit(){
-    double ** matrixA = initFloatMatrix(100, 100);
+    FloatMatrix matrixA = initFloatMatrix(100, 100);
 
     matrixA[0][0] = 5.5;
     matrixA[99][99] = 5.5;
@@ -37,7 +37,7 @@ int test_initFloatMatrixInit(){
 
 int test_idIntegerMatrixInit(){
     long i, j;
-    long long ** matrixA = idIntegerMatrix(100, 100);
+    IntegerMatrix matrixA = idIntegerMatrix(100, 100);
 
     for(i = 0; i < 100; i++)
         for(j = 0; j < 100; j++){
@@ -55,7 +55,7 @@ int test_idIntegerMatrixInit(){
 
 int test_idFloatMatrixInit(){
     long i, j;
-    double ** matrixA = idFloatMatrix(100, 100);
+    FloatMatrix matrixA = idFloatMatrix(100, 100);
 
     for(i = 0; i < 100; i++)
         for(j = 0; j < 100; j++){
@@ -73,7 +73,7 @@ int test_idFloatMatrixInit(){
 
 int test_showIntegerMatrixInit(){
     long i, j;
-    long long ** matrixA = randomIntegerMatrix(10, 10);
+    IntegerMatrix matrixA = randomIntegerMatrix(10, 10);
     
     showIntegerMatrix(matrixA, 10, 10);
     
@@ -84,7 +84,7 @@ int test_showIntegerMatrixInit(){
 
 int test_showFloatMatrixInit(){
     long i, j;
-    double ** matrixA = randomFloatMatrix(10, 10);
+    FloatMatrix matrixA = randomFloatMatrix(10, 10);
 
     showFloatMatrix(matrixA, 10, 10);
 
@@ -93,14 +93,44 @@ int test_showFloatMatrixInit(){
     return 0;
 }
 
-int main(){
-    
-    test_truth();
-    test_initIntegerMatrixInit();
-    test_initFloatMatrixInit();
-    test_idIntegerMatrixInit();
-    test_idFloatMatrixInit();
+int test_IntegerMulS(){
+    long i, j;
+    IntegerMatrix a, b, c;
 
+    a = idIntegerMatrix(10, 10);
+    c = integerMulS(a, 10, 10, a, 10, 10);
+  
+    for(i = 0; i < 10; i++)
+        for(j = 0; j < 10; j++){
+           if(i == j)
+               assert(c[i][j] == 1);
+           else
+               assert(c[i][j] == 0);
+        }
+    PASSED;
+    freeIntegerMatrix(c, 10);
+    freeIntegerMatrix(a, 10);
+    
+    
+    a = randomIntegerMatrix(10, 10);
+    b = idIntegerMatrix(10, 10);
+    
+    c = integerMulS(a, 10, 10, b, 10, 10);
+
+    for(i = 0; i < 10; i++)
+        for(j = 0; j < 10; j++)
+            assert(c[i][j] == a[i][j]);
+
+    PASSED;
+    freeIntegerMatrix(a, 10);
+    freeIntegerMatrix(b, 10);
+    freeIntegerMatrix(c, 10);
+    
+    
+    return 0;
+}
+
+int test_show(){
 
     printf("\n");
     test_showIntegerMatrixInit();
@@ -108,6 +138,18 @@ int main(){
     printf("\n");
     test_showFloatMatrixInit();
     printf("\n");
+
+}
+int main(){
+    
+    test_truth();
+    test_initIntegerMatrixInit();
+    test_initFloatMatrixInit();
+    test_idIntegerMatrixInit();
+    test_idFloatMatrixInit();
+    test_IntegerMulS();
+    
+    //test_show();
 
     printf("\n");
     return 0;  

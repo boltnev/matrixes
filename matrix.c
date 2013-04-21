@@ -7,8 +7,12 @@
  * How to reduce the copypaste?
  * */
 
-long long ** initIntegerMatrix(long sizeX, long sizeY){
-    long long **p_matrix; 
+
+#include "matrix.h"
+ 
+
+IntegerMatrix initIntegerMatrix(long sizeX, long sizeY){
+    IntegerMatrix p_matrix; 
     long j;
     
     p_matrix = malloc(sizeX * sizeof(long long *));
@@ -20,9 +24,9 @@ long long ** initIntegerMatrix(long sizeX, long sizeY){
     return p_matrix;
 }
 
-double ** initFloatMatrix(long sizeX, long sizeY){
+FloatMatrix initFloatMatrix(long sizeX, long sizeY){
 
-    double **p_matrix; 
+    FloatMatrix p_matrix; 
     long j;
     
     p_matrix = malloc(sizeX * sizeof(double *));
@@ -45,7 +49,7 @@ void freeIntegerMatrix(long long  ** p_matrix, long sizeX){
     free(p_matrix);
 }
 
-void freeFloatMatrix(double ** p_matrix, long sizeX){
+void freeFloatMatrix(FloatMatrix p_matrix, long sizeX){
     long j;
         
     for(j = 0; j < sizeX; j++){
@@ -56,9 +60,9 @@ void freeFloatMatrix(double ** p_matrix, long sizeX){
 }
 
 
-long long ** zeroIntegerMatrix(long sizeX, long sizeY){
+IntegerMatrix zeroIntegerMatrix(long sizeX, long sizeY){
     long i, j;
-    long long ** matrix = initIntegerMatrix(sizeX, sizeY);
+    IntegerMatrix matrix = initIntegerMatrix(sizeX, sizeY);
     
     for(i = 0; i < sizeX; i++)
         for(j = 0; j < sizeY; j++)
@@ -67,9 +71,9 @@ long long ** zeroIntegerMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
-double ** zeroFloatMatrix(long sizeX, long sizeY){
+FloatMatrix zeroFloatMatrix(long sizeX, long sizeY){
     long i, j;
-    double ** matrix = initFloatMatrix(sizeX, sizeY);
+    FloatMatrix matrix = initFloatMatrix(sizeX, sizeY);
     
     for(i = 0; i < sizeX; i++)
         for(j = 0; j < sizeY; j++)
@@ -78,9 +82,9 @@ double ** zeroFloatMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
-long long **idIntegerMatrix(long sizeX, long sizeY){
+IntegerMatrix idIntegerMatrix(long sizeX, long sizeY){
     long i;
-    long long ** matrix = zeroIntegerMatrix(sizeX, sizeY);
+    IntegerMatrix matrix = zeroIntegerMatrix(sizeX, sizeY);
     
     for(i = 0; i < sizeX; i++)
         matrix[i][i] = 1;
@@ -88,9 +92,9 @@ long long **idIntegerMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
-double ** idFloatMatrix(long sizeX, long sizeY){
+FloatMatrix idFloatMatrix(long sizeX, long sizeY){
     long i;
-    double ** matrix = zeroFloatMatrix(sizeX, sizeY);
+    FloatMatrix matrix = zeroFloatMatrix(sizeX, sizeY);
     
     for(i = 0; i < sizeX; i++)
         matrix[i][i] = 1;
@@ -98,9 +102,9 @@ double ** idFloatMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
-long long ** randomIntegerMatrix(long sizeX, long sizeY){
+IntegerMatrix randomIntegerMatrix(long sizeX, long sizeY){
     long i, j;
-    long long ** matrix = initIntegerMatrix(sizeX, sizeY);
+    IntegerMatrix matrix = initIntegerMatrix(sizeX, sizeY);
     
     srand(time(NULL));
     
@@ -111,9 +115,9 @@ long long ** randomIntegerMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
-double ** randomFloatMatrix(long sizeX, long sizeY){
+FloatMatrix randomFloatMatrix(long sizeX, long sizeY){
     long i, j;
-    double ** matrix = initFloatMatrix(sizeX, sizeY);
+    FloatMatrix matrix = initFloatMatrix(sizeX, sizeY);
     
     srand(time(NULL));
     for(i = 0; i < sizeX; i++)
@@ -123,7 +127,7 @@ double ** randomFloatMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
-void showIntegerMatrix(long long ** matrix, long sizeX, long sizeY ){
+void showIntegerMatrix(IntegerMatrix matrix, long sizeX, long sizeY ){
     long i, j;
     for(i = 0; i < sizeX; i++){
         for(j = 0; j < sizeY; j++)
@@ -133,7 +137,7 @@ void showIntegerMatrix(long long ** matrix, long sizeX, long sizeY ){
 }
 
 
-void showFloatMatrix(double ** matrix, long sizeX, long sizeY ){
+void showFloatMatrix(FloatMatrix matrix, long sizeX, long sizeY ){
     long i, j;
     for(i = 0; i < sizeX; i++){
         for(j = 0; j < sizeY; j++)
@@ -143,3 +147,28 @@ void showFloatMatrix(double ** matrix, long sizeX, long sizeY ){
     
 }
 
+
+IntegerMatrix 
+integerMulS(IntegerMatrix a, long sizeXA, long sizeYA, 
+            IntegerMatrix b, long sizeXB, long sizeYB)
+{
+    //assert(sizeXA == sizeYB);
+
+    IntegerMatrix c = initIntegerMatrix(sizeYA, sizeXB);
+    
+    long i, j, k;
+    long long element;
+
+    for( i = 0; i < sizeYA; i++ )
+        for(j = 0; j < sizeXB; j++){
+            
+            element = 0;
+            for(k = 0; k < sizeXA; k++){
+                element += a[k][i] * b[j][k]; 
+            }
+
+            c[j][i] = element;
+        }
+
+    return c;
+}
