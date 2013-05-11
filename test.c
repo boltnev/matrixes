@@ -125,8 +125,121 @@ int test_IntegerMulS(){
     freeIntegerMatrix(a, 10);
     freeIntegerMatrix(b, 10);
     freeIntegerMatrix(c, 10);
+   
+    Integer aa[2][3] = {
+                         {1, 2, 3},
+                         {5, 4, 6}
+                       };
+
+    Integer bb[3][2] = {
+                         {1, 2},
+                         {2, 3},
+                         {4, 5}
+                       }; 
+    
+    a = initIntegerMatrix(2, 3);
+    b = initIntegerMatrix(3, 2);
+
+    for(i = 0; i < 2; i++)
+        for(j = 0; j < 3; j++)
+        {
+            a[i][j] = aa[i][j];
+        }
+
+    for(i = 0; i < 3; i++)
+        for(j = 0; j < 2; j++)
+        {
+            b[i][j] = bb[i][j];
+        }
+
+
+    c = integerMulS(a, 2, 3, 
+                    b, 3, 2);
+
+    assert( c[0][0] == 17);
+    assert( c[0][1] == 23);
+    assert( c[1][0] == 37);
+    assert( c[1][1] == 52);
+
+    PASSED;
+    freeIntegerMatrix(a, 2);
+    freeIntegerMatrix(b, 3);
+    freeIntegerMatrix(c, 2);
+    return 0;
+}
+
+int test_FloatMulS(){
+    long i, j;
+    FloatMatrix a, b, c;
+
+    a = idFloatMatrix(10, 10);
+    c = floatMulS(a, 10, 10, a, 10, 10);
+  
+    for(i = 0; i < 10; i++)
+        for(j = 0; j < 10; j++){
+           if(i == j)
+               assert(c[i][j] == 1.0);
+           else
+               assert(c[i][j] == 0.0);
+        }
+    PASSED;
+    freeFloatMatrix(c, 10);
+    freeFloatMatrix(a, 10);
     
     
+    a = randomFloatMatrix(10, 10);
+    b = idFloatMatrix(10, 10);
+    
+    c = floatMulS(a, 10, 10, b, 10, 10);
+
+    for(i = 0; i < 10; i++)
+        for(j = 0; j < 10; j++)
+            assert(c[i][j] == a[i][j]);
+
+    PASSED;
+    freeFloatMatrix(a, 10);
+    freeFloatMatrix(b, 10);
+    freeFloatMatrix(c, 10);
+   
+    Float aa[2][3] = {
+                         {1, 2, 3},
+                         {5, 4, 6}
+                       };
+
+    Float bb[3][2] = {
+                         {1, 2},
+                         {2, 3},
+                         {4, 5}
+                       }; 
+    
+    a = initFloatMatrix(2, 3);
+    b = initFloatMatrix(3, 2);
+
+    for(i = 0; i < 2; i++)
+        for(j = 0; j < 3; j++)
+        {
+            a[i][j] = aa[i][j];
+        }
+
+    for(i = 0; i < 3; i++)
+        for(j = 0; j < 2; j++)
+        {
+            b[i][j] = bb[i][j];
+        }
+
+
+    c = floatMulS(a, 2, 3, 
+                    b, 3, 2);
+
+    assert( c[0][0] == 17);
+    assert( c[0][1] == 23);
+    assert( c[1][0] == 37);
+    assert( c[1][1] == 52);
+
+    PASSED;
+    freeFloatMatrix(a, 2);
+    freeFloatMatrix(b, 3);
+    freeFloatMatrix(c, 2);
     return 0;
 }
 
@@ -140,6 +253,7 @@ int test_show(){
     printf("\n");
 
 }
+
 int main(){
     
     test_truth();
@@ -148,6 +262,7 @@ int main(){
     test_idIntegerMatrixInit();
     test_idFloatMatrixInit();
     test_IntegerMulS();
+    test_FloatMulS();
     
     //test_show();
 

@@ -5,6 +5,7 @@
 /*
  * TODO: refactoring
  * How to reduce the copypaste?
+ * rewrite all in C++
  * */
 
 
@@ -82,6 +83,7 @@ FloatMatrix zeroFloatMatrix(long sizeX, long sizeY){
     return matrix;
 }
 
+
 IntegerMatrix idIntegerMatrix(long sizeX, long sizeY){
     long i;
     IntegerMatrix matrix = zeroIntegerMatrix(sizeX, sizeY);
@@ -129,22 +131,25 @@ FloatMatrix randomFloatMatrix(long sizeX, long sizeY){
 
 void showIntegerMatrix(IntegerMatrix matrix, long sizeX, long sizeY ){
     long i, j;
+    printf("\n");
     for(i = 0; i < sizeX; i++){
         for(j = 0; j < sizeY; j++)
             printf("%3lld  ", matrix[i][j]);
         printf("\n");
         }
+    printf("\n");
 }
 
 
 void showFloatMatrix(FloatMatrix matrix, long sizeX, long sizeY ){
     long i, j;
+    printf("\n");
     for(i = 0; i < sizeX; i++){
         for(j = 0; j < sizeY; j++)
             printf("%5.3lf  ", matrix[i][j]);
         printf("\n");
         }
-    
+    printf("\n");
 }
 
 
@@ -152,22 +157,48 @@ IntegerMatrix
 integerMulS(IntegerMatrix a, long sizeXA, long sizeYA, 
             IntegerMatrix b, long sizeXB, long sizeYB)
 {
-    //assert(sizeXA == sizeYB);
+    if(sizeYA != sizeXB)
+        return NULL;
 
     IntegerMatrix c = initIntegerMatrix(sizeYA, sizeXB);
     
     long i, j, k;
-    long long element;
+    Integer element;
 
-    for( i = 0; i < sizeYA; i++ )
-        for(j = 0; j < sizeXB; j++){
+    for( i = 0; i < sizeXA; i++ )
+        for(j = 0; j < sizeYB; j++){
             
             element = 0;
-            for(k = 0; k < sizeXA; k++){
-                element += a[k][i] * b[j][k]; 
+            for(k = 0; k < sizeYA; k++){
+                element += a[i][k] * b[k][j]; 
             }
 
-            c[j][i] = element;
+            c[i][j] = element;
+        }
+
+    return c;
+}
+FloatMatrix 
+floatMulS(FloatMatrix a, long sizeXA, long sizeYA, 
+          FloatMatrix b, long sizeXB, long sizeYB)
+{
+    if(sizeYA != sizeXB)
+        return NULL;
+
+    FloatMatrix c = initFloatMatrix(sizeYA, sizeXB);
+    
+    long i, j, k;
+    Float element;
+
+    for( i = 0; i < sizeXA; i++ )
+        for(j = 0; j < sizeYB; j++){
+            
+            element = 0;
+            for(k = 0; k < sizeYA; k++){
+                element += a[i][k] * b[k][j]; 
+            }
+
+            c[i][j] = element;
         }
 
     return c;

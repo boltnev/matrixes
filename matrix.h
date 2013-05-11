@@ -7,8 +7,11 @@
 #ifndef matrix_lib
 #define matrix_lib
 
-typedef long long **  IntegerMatrix;
-typedef double **     FloatMatrix;
+typedef long long   Integer;
+typedef double      Float;
+
+typedef Integer **  IntegerMatrix;
+typedef Float   **  FloatMatrix;
 
 /* init */
 
@@ -44,4 +47,7 @@ IntegerMatrix
 integerMulS(IntegerMatrix A, long sizeXA, long sizeYA, 
             IntegerMatrix B, long sizeXB, long sizeYB);
 
+FloatMatrix 
+floatMulS(FloatMatrix a, long sizeXA, long sizeYA, 
+          FloatMatrix b, long sizeXB, long sizeYB);
 #endif
