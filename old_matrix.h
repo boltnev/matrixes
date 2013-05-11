@@ -28,7 +28,7 @@ IntegerMatrix zeroIntegerMatrix(long sizeX, long sizeY);
 
 FloatMatrix zeroFloatMatrix(long sizeX, long sizeY);
 
-IntegerMatrixidIntegerMatrix(long sizeX, long sizeY);
+IntegerMatrix idIntegerMatrix(long sizeX, long sizeY);
 
 FloatMatrix idFloatMatrix(long sizeX, long sizeY);
 
@@ -50,4 +50,10 @@ integerMulS(IntegerMatrix A, long sizeXA, long sizeYA,
 FloatMatrix 
 floatMulS(FloatMatrix a, long sizeXA, long sizeYA, 
           FloatMatrix b, long sizeXB, long sizeYB);
+
+
+
+/* templates */
+
+
 #endif

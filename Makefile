@@ -1,17 +1,17 @@
 
-CC=gcc
+CC=g++
 DEBUG=-g 
+	
+SOURCES=test_basic.cpp test.cpp test_Matrix.cpp old_matrix.cpp Matrix.cpp
 
-SOURCES=test_basic.c test.c matrix.c
-
-OBJECTS=$(SOURCES:.c=.o)
+OBJECTS=$(SOURCES:.cpp=.o)
 
 OUTPUT=test
 
-test: $(OBJECTS)
+all: $(OBJECTS)
 			$(CC) $(OBJECTS) -o $(OUTPUT)
 
-test_debug: $(OBJECTS)
+debug: $(OBJECTS)
 			$(CC) $(DEBUG) $(OBJECTS) -o $(OUTPUT)
 
 clean: 

@@ -1,10 +1,8 @@
-#include <assert.h>
-#include <stdio.h>
-#include "matrix.h"
 #include "test.h"
 
+
 int test_truth(){
-    assert(TRUE);
+    assert(true);
     PASSED;
     return 0;
 }

@@ -9,17 +9,17 @@
  * */
 
 
-#include "matrix.h"
+#include "old_matrix.h"
  
 
 IntegerMatrix initIntegerMatrix(long sizeX, long sizeY){
     IntegerMatrix p_matrix; 
     long j;
     
-    p_matrix = malloc(sizeX * sizeof(long long *));
+    p_matrix = (IntegerMatrix) malloc(sizeX * sizeof(Integer *));
         
     for(j = 0; j < sizeX; j++){
-        p_matrix[j] = malloc(sizeY * sizeof(long long));
+        p_matrix[j] = (Integer *) malloc(sizeY * sizeof(Integer));
     }
     
     return p_matrix;
@@ -30,10 +30,10 @@ FloatMatrix initFloatMatrix(long sizeX, long sizeY){
     FloatMatrix p_matrix; 
     long j;
     
-    p_matrix = malloc(sizeX * sizeof(double *));
+    p_matrix = (FloatMatrix)  malloc(sizeX * sizeof(Float *));
         
     for(j = 0; j < sizeX; j++){
-        p_matrix[j] = malloc(sizeY * sizeof(double));
+        p_matrix[j] = (Float * ) malloc(sizeY * sizeof(Float));
     }
     
     return p_matrix;
@@ -178,6 +178,8 @@ integerMulS(IntegerMatrix a, long sizeXA, long sizeYA,
 
     return c;
 }
+
+
 FloatMatrix 
 floatMulS(FloatMatrix a, long sizeXA, long sizeYA, 
           FloatMatrix b, long sizeXB, long sizeYB)
@@ -203,3 +205,6 @@ floatMulS(FloatMatrix a, long sizeXA, long sizeYA,
 
     return c;
 }
+
+
+

@@ -3,11 +3,13 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include "matrix.h"
+#include "old_matrix.h"
 #include "test_basic.h"
 
-#define TRUE 1
-#define FALSE 0
+#include "Matrix.h"
+#include "test_Matrix.h"
+
+
 #define PASSED printf(".")
 
 #endif
