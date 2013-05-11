@@ -2,7 +2,7 @@
 CC=gcc
 DEBUG=-g 
 
-SOURCES=test.c matrix.c
+SOURCES=test_basic.c test.c matrix.c
 
 OBJECTS=$(SOURCES:.c=.o)
 
@@ -15,6 +15,6 @@ test_debug: $(OBJECTS)
 			$(CC) $(DEBUG) $(OBJECTS) -o $(OUTPUT)
 
 clean: 
-		rm -rf $(OBJECTS)
+		rm -rf $(OBJECTS) $(OUTPUT)
 
 
