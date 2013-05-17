@@ -77,7 +77,7 @@ int test_toId(){
 			if(i == j)
 				assert(matrixA->matrix[i][j] == 1);
 			else
-			    assert(matrixA->matrix[i][j] == 0);
+		    assert(matrixA->matrix[i][j] == 0);
 		}
 
     delete matrixA;
@@ -85,14 +85,74 @@ int test_toId(){
 	return 0;
 }
 
+int test_MulS(){
+    sizeType i, j;
+    //Matrix<double>* a, b, c;
+
+    Matrix<double> a(10, 10); //= new Matrix<double>(10, 10);
+    Matrix<double> c(10, 10);
+
+    a.randomize();
+    c.toId();
+
+    PASSED;
+
+    Matrix<double> d = a * c;
+
+    for(i = 0; i < 10; i++)
+        for(j = 0; j < 10; j++)
+            assert(d.matrix[i][j] == a.matrix[i][j]);
+
+    PASSED;
+ 
+
+    Matrix<double> f(2, 3);
+    Matrix<double> g(3, 2);
+
+
+    double aa[2][3] = {
+                         {1, 2, 3},
+                         {5, 4, 6}
+                     };
+
+    double bb[3][2] = {
+                         {1, 2},
+                         {2, 3},
+                         {4, 5}
+                       };
+
+    for(i = 0; i < 2; i++)
+        for(j = 0; j < 3; j++)
+        {
+            f.matrix[i][j] = aa[i][j];
+        }
+
+    for(i = 0; i < 3; i++)
+            for(j = 0; j < 2; j++)
+            {
+                g.matrix[i][j] = bb[i][j];
+            }
+
+    Matrix<double> h = f * g; 
+   
+    assert( h.matrix[0][0] == 17);
+    assert( h.matrix[0][1] == 23);
+    assert( h.matrix[1][0] == 37);
+    assert( h.matrix[1][1] == 52);
+
+    PASSED;
+    return 0;
+}
 
 int test_Matrix(){
 	test_MatrixInit();
 	test_Randomize();
 	test_toZero();
 	test_toId();
-	//test_Show();
+	test_MulS();
 
+  //test_Show();
 
+  printf("\n");
 	return 0;
 }
