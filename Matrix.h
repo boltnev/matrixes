@@ -13,6 +13,8 @@
 #include <iostream>
 #include <exception>
 #include <omp.h>
+#include <mpi.h>
+
 using namespace std;
 
 typedef long sizeType;

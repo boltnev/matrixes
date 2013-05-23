@@ -1,7 +1,6 @@
 #include "benchmark.h"
 #define MAT_SIZE 1000
 #include <omp.h>
-
 void randomize(){
 	double seconds;
     time_t s_time, f_time;

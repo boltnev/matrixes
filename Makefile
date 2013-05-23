@@ -15,10 +15,17 @@ OUTPUT=test
 all: $(OBJECTS)
 			$(CC) $(CFLAGS) -include $(HEADERS) $(SOURCES) -o $(OUTPUT) 
 
+mpi: $(OBJECTS)
+			mpic++ $(CFLAGS) -include $(HEADERS) $(SOURCES) -o $(OUTPUT) 
+
 debug: $(OBJECTS)
 			$(CC) $(DEBUG) $(OBJECTS) -include $(HEADERS) -o $(OUTPUT)
 
 clean: 
 		rm -rf $(OBJECTS) $(OUTPUT)
 		
-
+remake:
+		make clean && make
+		
+remake_mpi:
+		make clean && make mpi

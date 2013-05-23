@@ -247,7 +247,7 @@ int test_show(){
     printf("\n");
     test_showFloatMatrixInit();
     printf("\n");
-
+	return 0;
 }
 
 int test_basic(){
