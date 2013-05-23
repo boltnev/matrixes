@@ -120,8 +120,7 @@ void Matrix<T>::randomize(){
     srand(time(NULL));
     for(i = 0; i < xSize; i++)
         for(j = 0; j < ySize; j++)
-            matrix[i][j] = LONG_MIN / 2 + (T) rand()/ ((T)RAND_MAX/(LONG_MAX / 2 - LONG_MIN / 2)) ;
-
+            matrix[i][j] = rand(); 
 }
 
 template <typename T>
