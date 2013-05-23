@@ -212,7 +212,6 @@ int test_gauss(){
 
 	float* sol = a.gauss();
 	
-	
 	assert(sol[0] == 2);
 	assert(sol[1] == 3);
 	assert(sol[2] == -1); 

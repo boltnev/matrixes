@@ -2,7 +2,7 @@
 CC=g++
 DEBUG=-g 
 	
-SOURCES=test_basic.cpp test.cpp test_Matrix.cpp old_matrix.cpp
+SOURCES=test_basic.cpp test.cpp test_Matrix.cpp old_matrix.cpp benchmark.cpp
 
 HEADERS=Matrix.h
 
@@ -19,3 +19,4 @@ debug: $(OBJECTS)
 clean: 
 		rm -rf $(OBJECTS) $(OUTPUT)
 		
+
