@@ -26,6 +26,8 @@ protected:
       
 	  Matrix<T>* simpleMultiplication(Matrix<T>* A, Matrix<T>* B);
 	  
+	  Matrix<T>* Matrix<T>::OMPMultiplication(Matrix<T>* A, Matrix<T>* B);
+	  
 	  T* retrieveGaussSolution();
 public:
 	  T** matrix;
@@ -34,6 +36,8 @@ public:
 
       Matrix<T> operator*(Matrix<T>& right);
 
+	  Matrix<T> mulOmp(Matrix<T>& right );
+		  
 	  void randomize();
 
 	  void show();
@@ -42,6 +46,7 @@ public:
 
 	  void toId();
 
+	  // TODO
 	  void rowMul(sizeType row, T);
 
 	  void rowAdd(sizeType rowX, sizeType rowY, T el);
@@ -160,7 +165,7 @@ void Matrix<T>::toId(){
         		matrix[i][j] = 0;
         }
 }
-
+/*  multiplication */
 template <typename T>
 Matrix<T> Matrix<T>::operator*(Matrix<T>& right )
 {
@@ -189,6 +194,37 @@ Matrix<T>* Matrix<T>::simpleMultiplication(Matrix<T>* A, Matrix<T>* B){
     }     
     return C;
 }
+
+template <typename T>
+Matrix<T> Matrix<T>::mulOmp(Matrix<T>& right )
+{
+    return *OMPMultiplication(this, &right);
+}
+
+
+template <typename T>
+Matrix<T>* Matrix<T>::OMPMultiplication(Matrix<T>* A, Matrix<T>* B){
+
+    if(A->ySize != B->xSize)
+      throw;
+
+    Matrix<T>* C = new Matrix<T>(A->xSize, B->ySize);
+                    
+    sizeType i, j, k;
+    T element;
+
+    for( i = 0; i < A->xSize; i++ )
+        for(j = 0; j < B->ySize; j++){
+            
+            C->matrix[i][j] = 0;
+            for(k = 0; k < A->ySize; k++){
+                C->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j]; 
+            }   
+    
+    }     
+    return C;
+}
+
 
 template <typename T>
 void  Matrix<T>::rowMul(sizeType row, T el){
