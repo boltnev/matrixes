@@ -233,6 +233,7 @@ void Matrix<T>::triangulize(){
 }
 
 /*
+TODO:
 void rowSwap(sizeType rowX, sizeType rowY);
 
 Matrix<T> dup();
