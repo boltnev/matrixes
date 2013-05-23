@@ -233,7 +233,7 @@ int test_MulOMP(){
 
     PASSED;
 
-    Matrix<double> d = a * c;
+    Matrix<double> d = a.mulOmp(c);
 
     for(i = 0; i < 10; i++)
         for(j = 0; j < 10; j++)
@@ -269,7 +269,7 @@ int test_MulOMP(){
                 g.matrix[i][j] = bb[i][j];
             }
 
-    Matrix<double> h = f * g; 
+    Matrix<double> h = f.mulOmp(g); 
    
     assert( h.matrix[0][0] == 17);
     assert( h.matrix[0][1] == 23);
@@ -286,6 +286,7 @@ int test_Matrix(){
 	test_toZero();
 	test_toId();
 	test_MulS();
+  test_MulOMP();
 	test_transitions();
 	test_triangulize();
 	test_gauss();

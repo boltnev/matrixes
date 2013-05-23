@@ -1,6 +1,7 @@
 #include "benchmark.h"
 #define MAT_SIZE 1000
- 
+#include <omp.h>
+
 void randomize(){
 	double seconds;
     time_t s_time, f_time;
@@ -54,13 +55,47 @@ void gauss(){
 	time(&f_time);
 	seconds = difftime(f_time, s_time);
 	
-    printf ("Simple gauss solution, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
+  printf ("Simple gauss solution, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
 }
 
+void multiplicatioOMP(){
+	double seconds;
+    time_t s_time, f_time;
+	
+	Matrix<double> a(MAT_SIZE, MAT_SIZE);
+	Matrix<double> b(MAT_SIZE, MAT_SIZE);
+	a.randomize();
+	b.randomize();
+	
+	time(&s_time);
+	
+	//	
+	Matrix<double> c = a.mulOmp(b);
+	//
+
+	time(&f_time);
+	seconds = difftime(f_time, s_time);
+	
+  printf ("OMP multiplication, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
+}
+
+
+void testOmp(){
+
+  omp_set_num_threads(4);
+  #pragma omp parallel
+  {
+    cout << "asd" << endl;
+  }
+
+}
 
 int benchmark(){
 	randomize();
 	multiplication();
-	gauss();
-	return 0;
+	//gauss();
+  //testOmp();
+  multiplicatioOMP();
+
+  return 0;
 }

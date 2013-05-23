@@ -26,7 +26,7 @@ protected:
       
 	  Matrix<T>* simpleMultiplication(Matrix<T>* A, Matrix<T>* B);
 	  
-	  Matrix<T>* Matrix<T>::OMPMultiplication(Matrix<T>* A, Matrix<T>* B);
+	  Matrix<T>* OMPMultiplication(Matrix<T>* A, Matrix<T>* B);
 	  
 	  T* retrieveGaussSolution();
 public:
@@ -34,7 +34,7 @@ public:
 
 	  T** initDblPtr(sizeType x, sizeType y);
 
-      Matrix<T> operator*(Matrix<T>& right);
+    Matrix<T> operator*(Matrix<T>& right);
 
 	  Matrix<T> mulOmp(Matrix<T>& right );
 		  
@@ -208,20 +208,21 @@ Matrix<T>* Matrix<T>::OMPMultiplication(Matrix<T>* A, Matrix<T>* B){
     if(A->ySize != B->xSize)
       throw;
 
+    omp_set_num_threads(4);
+
     Matrix<T>* C = new Matrix<T>(A->xSize, B->ySize);
                     
     sizeType i, j, k;
     T element;
-
-    for( i = 0; i < A->xSize; i++ )
-        for(j = 0; j < B->ySize; j++){
-            
-            C->matrix[i][j] = 0;
-            for(k = 0; k < A->ySize; k++){
-                C->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j]; 
-            }   
-    
-    }     
+    #pragma omp parallel for private(i, j, k)
+    for( i = 0; i < A->xSize; i++ ){
+       for(j = 0; j < B->ySize; j++){
+           C->matrix[i][j] = 0;
+           for(k = 0; k < A->ySize; k++){
+               C->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j]; 
+           }   
+       }
+    }
     return C;
 }
 
@@ -284,7 +285,6 @@ void Matrix<T>::triangulizeUp(){
 
 
 // only for  A * A + 1 matrixes
-
 template <typename T>
 T* Matrix<T>::retrieveGaussSolution(){
 
