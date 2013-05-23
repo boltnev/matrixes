@@ -41,11 +41,13 @@ public:
 
 	  void rowMul(sizeType row, T);
 
-	  void rowAdd(sizeType rowX, sizeType rowY, T el = 1);
+	  void rowAdd(sizeType rowX, sizeType rowY, T el);
 
-	  void rowAdd(sizeType rowX, sizeType rowY);
+	  void rowAddDiv(sizeType rowX, sizeType rowY, T el, T el2);
 
 	  void rowSwap(sizeType rowX, sizeType rowY);
+
+	  void triangulize();
 
 	  Matrix<T> dup();
 
@@ -208,8 +210,30 @@ void  Matrix<T>::rowAdd(sizeType rowA, sizeType rowB, T el){
 		matrix[rowA][i] += el * matrix[rowB][i];
 }
 
-/*void rowAdd(sizeType rowX, sizeType rowY, T el);
+template <typename T>
+void  Matrix<T>::rowAddDiv(sizeType rowA, sizeType rowB, T el, T el2){
+    if(rowA >= xSize)
+      throw;
+    if(rowB >= xSize)
+      throw;
 
+	for(sizeType i = 0; i < xSize; i++)
+		matrix[rowA][i] += matrix[rowB][i] / el2 * el;
+}
+
+
+template <typename T>
+void Matrix<T>::triangulize(){
+
+	if(xSize < 2 || ySize < 2)
+		return;
+
+	for(sizeType i = 0; i < ySize && i < xSize; i++ )
+		for(sizeType j = i + 1; j < xSize; j++)
+			rowAddDiv(j, i, -matrix[j][i], matrix[i][i]);
+}
+
+/*
 void rowSwap(sizeType rowX, sizeType rowY);
 
 Matrix<T> dup();

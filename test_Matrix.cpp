@@ -160,10 +160,33 @@ int test_transitions(){
     for(sizeType i = 0; i < 10; i++)
     	assert(a.matrix[1][i] == s[i]);
 
+    a.rowAdd(8, 8, -1);
+
+    for(sizeType i = 0; i < 10; i++)
+    	assert(a.matrix[8][i] == 0);
+
+    a.rowAddDiv(1, 0, -a.matrix[1][0], a.matrix[0][0] );
+
+    assert(a.matrix[1][0] == 0);
+
 	PASSED;
 	return 0;
 }
 
+int test_triangulize(){
+    Matrix<float> a(10, 10); //= new Matrix<double>(10, 10);
+
+    a.randomize();
+
+    a.triangulize();
+
+    for(sizeType i = 0; i < a.getYSize(); i++)
+    	for(sizeType j = 0; j < a.getXSize(); j++)
+    		if(j > i)
+    			assert(a.matrix[j][i] == 0);
+    PASSED;
+	return 0;
+}
 int test_Matrix(){
 	test_MatrixInit();
 	test_Randomize();
@@ -171,6 +194,8 @@ int test_Matrix(){
 	test_toId();
 	test_MulS();
 	test_transitions();
+	test_triangulize();
+
 
   //test_Show();
 
