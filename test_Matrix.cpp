@@ -144,12 +144,33 @@ int test_MulS(){
     return 0;
 }
 
+int test_transitions(){
+
+    Matrix<double> a(10, 10); //= new Matrix<double>(10, 10);
+
+    a.randomize();
+
+    double s[10];
+
+    for(sizeType i = 0; i < 10; i++)
+    	s[i] = a.matrix[1][i] + a.matrix[2][i];
+
+    a.rowAdd(1, 2, 1);
+
+    for(sizeType i = 0; i < 10; i++)
+    	assert(a.matrix[1][i] == s[i]);
+
+	PASSED;
+	return 0;
+}
+
 int test_Matrix(){
 	test_MatrixInit();
 	test_Randomize();
 	test_toZero();
 	test_toId();
 	test_MulS();
+	test_transitions();
 
   //test_Show();
 

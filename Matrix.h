@@ -39,6 +39,16 @@ public:
 
 	  void toId();
 
+	  void rowMul(sizeType row, T);
+
+	  void rowAdd(sizeType rowX, sizeType rowY, T el = 1);
+
+	  void rowAdd(sizeType rowX, sizeType rowY);
+
+	  void rowSwap(sizeType rowX, sizeType rowY);
+
+	  Matrix<T> dup();
+
 	  Matrix(){
 		  xSize = 0;
 		  ySize = 0;
@@ -175,5 +185,34 @@ Matrix<T>* Matrix<T>::simpleMultiplication(Matrix<T>* A, Matrix<T>* B){
     }     
     return C;
 }
+
+template <typename T>
+void  Matrix<T>::rowMul(sizeType row, T el){
+
+    if(row > ySize)
+      throw;
+
+	sizeType i;
+	for(i = 0; i < xSize; i++)
+		matrix[i][row] *= el;
+}
+
+template <typename T>
+void  Matrix<T>::rowAdd(sizeType rowA, sizeType rowB, T el){
+    if(rowA >= xSize)
+      throw;
+    if(rowB >= xSize)
+      throw;
+
+	for(sizeType i = 0; i < xSize; i++)
+		matrix[rowA][i] += el * matrix[rowB][i];
+}
+
+/*void rowAdd(sizeType rowX, sizeType rowY, T el);
+
+void rowSwap(sizeType rowX, sizeType rowY);
+
+Matrix<T> dup();
+*/
 
 #endif /* MATRIX_H_ */
