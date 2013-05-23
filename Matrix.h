@@ -34,7 +34,7 @@ public:
 
 	  T** initDblPtr(sizeType x, sizeType y);
 
-    Matrix<T> operator*(Matrix<T>& right);
+      Matrix<T> operator*(Matrix<T>& right);
 
 	  Matrix<T> mulOmp(Matrix<T>& right );
 		  
@@ -61,6 +61,12 @@ public:
 	  void triangulizeUp();
 	  
 	  T* gauss();
+	  
+	  void triangulizeOMP();
+	  		  
+	  void triangulizeUpOMP();
+	  
+	  T* gaussOMP();
 	  
 	  Matrix<T> dup();
 
@@ -298,6 +304,39 @@ T* Matrix<T>::retrieveGaussSolution(){
 		
 } 
 	
+
+template <typename T>
+void Matrix<T>::triangulizeOMP(){
+
+	if(xSize < 2 || ySize < 2)
+		return;
+
+	sizeType i, j;
+	
+	for(i = 0; i < ySize && i < xSize; i++ ){
+		#pragma omp parallel for
+		for(j = i + 1; j < xSize; j++)
+			rowAddDiv(j, i, -matrix[j][i], matrix[i][i]);
+	}
+}
+
+template <typename T>
+void Matrix<T>::triangulizeUpOMP(){
+
+	if(xSize < 2 || ySize < 2)
+		return;
+
+	sizeType i, j;
+	
+	for(i = ySize - 2; i >= 0; i-- ){
+		#pragma omp parallel for
+		for(j = i - 1; j >= 0; j-- )
+			rowAddDiv(j, i, -matrix[j][i], matrix[i][i]);
+	}
+}
+
+
+
 template <typename T>
 T* Matrix<T>::gauss(){
 
@@ -307,6 +346,20 @@ T* Matrix<T>::gauss(){
 	triangulize();
 	
 	triangulizeUp();
+	
+	return retrieveGaussSolution();
+}
+
+
+template <typename T>
+T* Matrix<T>::gaussOMP(){
+
+	if(ySize != xSize + 1)
+		throw;
+	
+	triangulizeOMP();
+	
+	triangulizeUpOMP();
 	
 	return retrieveGaussSolution();
 }

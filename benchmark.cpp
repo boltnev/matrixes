@@ -55,7 +55,7 @@ void gauss(){
 	time(&f_time);
 	seconds = difftime(f_time, s_time);
 	
-  printf ("Simple gauss solution, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
+  	printf ("Simple gauss solution, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
 }
 
 void multiplicatioOMP(){
@@ -76,26 +76,34 @@ void multiplicatioOMP(){
 	time(&f_time);
 	seconds = difftime(f_time, s_time);
 	
-  printf ("OMP multiplication, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
+  printf ("openMP multiplication, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
 }
 
+void gaussOMP(){
+	double seconds;
+    time_t s_time, f_time;
+	
+	Matrix<double> a(MAT_SIZE, MAT_SIZE + 1);
+	a.randomize();
 
-void testOmp(){
+	time(&s_time);
+	
+	//	
+	a.gaussOMP();
+	//
 
-  omp_set_num_threads(4);
-  #pragma omp parallel
-  {
-    cout << "asd" << endl;
-  }
-
+	time(&f_time);
+	seconds = difftime(f_time, s_time);
+	
+	printf ("openMP gauss solution, %d X %d : %.f seconds \n", MAT_SIZE, MAT_SIZE, seconds);	  
 }
+
 
 int benchmark(){
 	randomize();
-	multiplication();
-	//gauss();
-  //testOmp();
-  multiplicatioOMP();
-
-  return 0;
+	//multiplication();
+	//multiplicatioOMP();
+	gauss();
+	gaussOMP();
+  	return 0;
 }
