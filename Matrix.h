@@ -12,7 +12,7 @@
 #include <limits.h>
 #include <iostream>
 #include <exception>
-
+#include <omp.h>
 using namespace std;
 
 typedef long sizeType;

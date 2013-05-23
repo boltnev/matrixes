@@ -11,7 +11,7 @@ OBJECTS=$(SOURCES:.cpp=.o)
 OUTPUT=test
 
 all: $(OBJECTS)
-			$(CC) $(OBJECTS) -include $(HEADERS) -o $(OUTPUT)
+			$(CC) $(OBJECTS) -include $(HEADERS) -o $(OUTPUT) -fopenmp
 
 debug: $(OBJECTS)
 			$(CC) $(DEBUG) $(OBJECTS) -include $(HEADERS) -o $(OUTPUT)
