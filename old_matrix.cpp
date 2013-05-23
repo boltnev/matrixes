@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
-/*
- * TODO: refactoring
- * How to reduce the copypaste?
- * rewrite all in C++
- * */
-
 
 #include "old_matrix.h"
  

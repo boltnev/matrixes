@@ -21,9 +21,12 @@ template <typename T>
 class Matrix {
 protected:
 	  sizeType xSize, ySize;
-  	  void freeDblPtr();
-      Matrix<T>* simpleMultiplication(Matrix<T>* A, Matrix<T>* B);
-
+  	  
+	  void freeDblPtr();
+      
+	  Matrix<T>* simpleMultiplication(Matrix<T>* A, Matrix<T>* B);
+	  
+	  T* retrieveGaussSolution();
 public:
 	  T** matrix;
 
@@ -44,11 +47,16 @@ public:
 	  void rowAdd(sizeType rowX, sizeType rowY, T el);
 
 	  void rowAddDiv(sizeType rowX, sizeType rowY, T el, T el2);
-
+	  
+	  // TODO
 	  void rowSwap(sizeType rowX, sizeType rowY);
 
 	  void triangulize();
-
+	  		  
+	  void triangulizeUp();
+	  
+	  T* gauss();
+	  
 	  Matrix<T> dup();
 
 	  Matrix(){
@@ -74,16 +82,11 @@ public:
 		    return ySize;
 	  }
 
-	  T** getMatrixPtr(){
-		    return matrix;
-	  }
 	  void operator=(Matrix<T>& right){
 		    xSize = right.getXSize();
     	    ySize = right.getYSize();
     	    matrix = right.getMatrixPtr();
       }
-
-
 };
 
 template <typename T>
@@ -205,7 +208,7 @@ void  Matrix<T>::rowAdd(sizeType rowA, sizeType rowB, T el){
     if(rowB >= xSize)
       throw;
 
-	for(sizeType i = 0; i < xSize; i++)
+	for(sizeType i = 0; i < ySize; i++)
 		matrix[rowA][i] += el * matrix[rowB][i];
 }
 
@@ -216,7 +219,7 @@ void  Matrix<T>::rowAddDiv(sizeType rowA, sizeType rowB, T el, T el2){
     if(rowB >= xSize)
       throw;
 
-	for(sizeType i = 0; i < xSize; i++)
+	for(sizeType i = 0; i < ySize; i++)
 		matrix[rowA][i] += matrix[rowB][i] / el2 * el;
 }
 
@@ -230,6 +233,46 @@ void Matrix<T>::triangulize(){
 	for(sizeType i = 0; i < ySize && i < xSize; i++ )
 		for(sizeType j = i + 1; j < xSize; j++)
 			rowAddDiv(j, i, -matrix[j][i], matrix[i][i]);
+}
+
+template <typename T>
+void Matrix<T>::triangulizeUp(){
+
+	if(xSize < 2 || ySize < 2)
+		return;
+
+	for(sizeType i = ySize - 2; i >= 0; i-- )
+		for(sizeType j = i - 1; j >= 0; j-- )
+			rowAddDiv(j, i, -matrix[j][i], matrix[i][i]);
+}
+
+
+// only for  A * A + 1 matrixes
+
+template <typename T>
+T* Matrix<T>::retrieveGaussSolution(){
+
+	T* result = (T*) malloc(sizeof(T) * xSize);
+	
+	for(sizeType i = xSize - 1; i >=0 ; i--){
+		result[i] = matrix[i][ySize - 1] / matrix[i][i];
+	}
+	
+	return result;
+		
+} 
+	
+template <typename T>
+T* Matrix<T>::gauss(){
+
+	if(ySize != xSize + 1)
+		throw;
+	
+	triangulize();
+	
+	triangulizeUp();
+	
+	return retrieveGaussSolution();
 }
 
 /*

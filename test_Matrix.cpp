@@ -185,8 +185,43 @@ int test_triangulize(){
     		if(j > i)
     			assert(a.matrix[j][i] == 0);
     PASSED;
+	
+	a.triangulizeUp();
+		
 	return 0;
 }
+
+int test_gauss(){
+	sizeType i, j;
+	
+	Matrix<float> a(3, 4);
+	
+		
+    double aa[3][4] = {
+                         {2, 1, -1, 8},
+                         {-3, -1, 2, -11},
+						 {-2, 1, 2, -3}
+                      };
+		
+    for(i = 0; i < 3; i++)
+    	for(j = 0; j < 4; j++)
+        {
+          a.matrix[i][j] = aa[i][j];
+        }				 
+    
+
+	float* sol = a.gauss();
+	
+	
+	assert(sol[0] == 2);
+	assert(sol[1] == 3);
+	assert(sol[2] == -1); 
+	
+	free( sol );
+	PASSED;
+	return 0;
+}
+
 int test_Matrix(){
 	test_MatrixInit();
 	test_Randomize();
@@ -195,7 +230,7 @@ int test_Matrix(){
 	test_MulS();
 	test_transitions();
 	test_triangulize();
-
+	test_gauss();
 
   //test_Show();
 
