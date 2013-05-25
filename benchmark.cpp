@@ -104,5 +104,12 @@ int benchmark(){
 	multiplicatioOMP();
 	gauss();
 	gaussOMP();
-  	return 0;
+ 	return 0;
+}
+
+int benchmark_mpi(){
+
+  printf("hello world");
+
+  return 0;
 }

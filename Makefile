@@ -1,13 +1,13 @@
 
 CC=g++
-CFLAGS= -fopenmp 
+CFLAGS=-fopenmp 
 DEBUG=-g 
 
 MPI_FLAG=MPI_BUILD
 
-SOURCES=test_basic.cpp test.cpp test_Matrix.cpp old_matrix.cpp benchmark.cpp
+SOURCES=test.cpp test_Matrix.cpp benchmark.cpp
 
-MPI_SOURCES=test_basic.cpp test_mpi.cpp test_Matrix.cpp old_matrix.cpp benchmark.cpp
+MPI_SOURCES=test_mpi.cpp test_Matrix.cpp benchmark.cpp
 
 HEADERS=Matrix.h
 
@@ -21,7 +21,7 @@ all: $(OBJECTS)
 			$(CC) $(CFLAGS) -include $(HEADERS) $(SOURCES) -o $(OUTPUT) 
 
 mpi: $(OBJECTS)
-			mpic++ $(CFLAGS) -include $(HEADERS) $(SOURCES) -o $(OUTPUT_MPI) -D $(MPI_FLAG)
+			mpic++ $(CFLAGS) -include $(HEADERS) $(MPI_SOURCES) -o $(OUTPUT_MPI) -D $(MPI_FLAG)
 
 debug: $(OBJECTS)
 			$(CC) $(DEBUG) $(OBJECTS) -include $(HEADERS) -o $(OUTPUT)

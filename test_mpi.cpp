@@ -7,7 +7,7 @@ int main(int argc, char **argv){
     MPI_Init(&argc, &argv);
     
     //test_Matrix();
-    //benchmark();
+    benchmark_mpi();
 
     MPI_Finalize();
 	

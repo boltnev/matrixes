@@ -5,5 +5,6 @@
 #include "Matrix.h"
 
 int benchmark();
+int benchmark_mpi();
 
 #endif

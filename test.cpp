@@ -4,8 +4,6 @@
 int main(int argc, char **argv){
 
     
-	test_basic();
- 
   test_Matrix();
 	
 	benchmark();
