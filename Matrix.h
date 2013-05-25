@@ -13,7 +13,10 @@
 #include <iostream>
 #include <exception>
 #include <omp.h>
+
+#ifdef MPI_BUILD
 #include <mpi.h>
+#endif
 
 using namespace std;
 

@@ -100,8 +100,8 @@ void gaussOMP(){
 
 int benchmark(){
 	randomize();
-	//multiplication();
-	//multiplicatioOMP();
+	multiplication();
+	multiplicatioOMP();
 	gauss();
 	gaussOMP();
   	return 0;
