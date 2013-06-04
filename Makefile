@@ -20,14 +20,15 @@ OUTPUT_MPI=test_mpi
 all: $(OBJECTS)
 			$(CC) $(CFLAGS) -include $(HEADERS) $(SOURCES) -o $(OUTPUT) 
 
-mpi: $(OBJECTS)
-			mpic++ $(CFLAGS) -include $(HEADERS) $(MPI_SOURCES) -o $(OUTPUT_MPI) -D $(MPI_FLAG)
+mpi:  
+			mpic++ Gauss.cpp -o mpi_gauss && \
+      mpic++ MatrixMult.cpp -o mpi_matrix
 
 debug: $(OBJECTS)
 			$(CC) $(DEBUG) $(OBJECTS) -include $(HEADERS) -o $(OUTPUT)
 
 clean: 
-		rm -rf $(OBJECTS) $(OUTPUT) $(OUTPUT_MPI)
+		rm -rf $(OBJECTS) $(OUTPUT) $(OUTPUT_MPI) mpi_gauss mpi_matrix
 		
 remake:
 		make clean && make
